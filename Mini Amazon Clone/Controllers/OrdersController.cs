@@ -12,11 +12,11 @@ namespace Mini_Amazon_Clone.Controllers
     [Route("api/[controller]")]
     public class OrdersController : ControllerBase
     {
-        private readonly OrderRepository _orderRepository;
+        private readonly IOrderRepository _orderRepository;
         private readonly AppDbContext _context;
 
 
-        public OrdersController(OrderRepository orderRepository, AppDbContext context)
+        public OrdersController(IOrderRepository orderRepository, AppDbContext context)
         {
             _orderRepository = orderRepository;
             _context = context;
@@ -65,7 +65,7 @@ namespace Mini_Amazon_Clone.Controllers
         [HttpGet("customer/{userId}")]
         public async Task<IActionResult> GetCustomerOrders(int userId)
         {
-            var orders = await _orderRepository.GetCustomerOrdersAsync(userId);
+            var orders = await _orderRepository.GetOrdersByCustomerId(userId);
             return Ok(orders);
         }
 
